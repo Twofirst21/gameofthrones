@@ -1,4 +1,13 @@
-require('handlebars');
+var express = require('express');
+var app = express();
+var PORT = 3000;
+
+var exphbs = require('express-handlebars');
+
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+
+app.set('view engine', 'handlebars');
+
 var lineage = {
     lannister: {
         house: 'House Lannister',
@@ -30,7 +39,16 @@ var lineage = {
             second_child: 'Sansa',
             third_child: 'Arya',
             fourth_child: 'Bran',
-            fifth_child: 'Rickon'        
+            fifth_child: 'Rickon'
         }
     },
 };
+
+app.get('/', function(req,res) {
+    res.render('index', lineage);
+});
+
+
+app.listen(PORT, function(){
+    console.log("listening on port %s", PORT);
+});
